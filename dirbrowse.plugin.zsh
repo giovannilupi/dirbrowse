@@ -58,9 +58,6 @@ zle -N insert-cycledir-up
 # The up arrow will not work on Terminal.app, since it cannot 
 # produce a key sequence for Option+Up
 # Sequences can be changed for other systems
-bindkey "^[^[[D" insert-cycledir-left
-bindkey "^[b" insert-cycledir-left
-bindkey "^[^[[C" insert-cycledir-right
-bindkey "^[f" insert-cycledir-right
-bindkey "^[^[[A" insert-cycledir-up
-bindkey "^[[1;3A" insert-cycledir-up
+bindkey "^[[1;2D" insert-cycledir-left
+bindkey "^[[1;2C" insert-cycledir-right
+bindkey "^[[1;2A" insert-cycledir-up
