@@ -16,15 +16,19 @@
 # Switch to new directory and push the current one onto the stack
 switch-to-dir () {
   setopt localoptions nopushdminus
-  [[ ${#dirstack} -eq 0 ]] && return 1
-
-  while ! builtin pushd -q $1 &>/dev/null; do
-    # We found a missing directory: pop it out of the dir stack
-    builtin popd -q $1
-
-    # Stop trying if there are no more directories in the dir stack
+  # Special handling for going to the parent directory
+  if [[ $1 == ".." ]]; then builtin pushd -q ".." &>/dev/null || return 1
+  else
     [[ ${#dirstack} -eq 0 ]] && return 1
-  done
+
+    while ! builtin pushd -q $1 &>/dev/null; do
+      # We found a missing directory: pop it out of the dir stack
+      builtin popd -q $1
+
+      # Stop trying if there are no more directories in the dir stack
+      [[ ${#dirstack} -eq 0 ]] && return 1
+    done
+  fi
 }
 
 # Insert previous directory and reset prompt
